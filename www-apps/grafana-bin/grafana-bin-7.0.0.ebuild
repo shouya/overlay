@@ -21,10 +21,6 @@ DEPEND=""
 RDEPEND="${DEPEND}
 	media-libs/fontconfig"
 
-QA_EXECSTACK="usr/share/grafana/tools/phantomjs/phantomjs"
-QA_PREBUILT="usr/bin/grafana-* ${QA_EXECSTACK}"
-QA_PRESTRIPPED=${QA_PREBUILT}
-
 pkg_setup() {
 	enewgroup grafana
 	enewuser grafana -1 -1 /usr/share/grafana grafana
@@ -42,12 +38,6 @@ src_install() {
 
 	dobin bin/grafana-cli
 	dobin bin/grafana-server
-
-	exeinto /usr/share/grafana/tools/phantomjs
-	doexe tools/phantomjs/phantomjs
-
-	insinto /usr/share/grafana/tools/phantomjs
-	doins tools/phantomjs/render.js
 
 	newconfd "${FILESDIR}"/grafana.confd grafana
 	newinitd "${FILESDIR}"/grafana.initd.3 grafana
